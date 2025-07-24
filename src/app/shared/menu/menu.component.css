@@ -1,0 +1,22 @@
+nav {
+  background: #f8f9fa;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+a:hover {
+  background: #e9ecef;
+}
+
+a.router-link-active {
+  background: #007bff;
+  color: white;
+}

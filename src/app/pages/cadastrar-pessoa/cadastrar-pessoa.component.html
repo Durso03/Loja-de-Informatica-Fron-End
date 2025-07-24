@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h2 class="mb-4 border-bottom border-3 border-danger">Cadastrar Pessoa</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input id="nome" class="form-control" formControlName="nome" />
+    </div>
+
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input id="cpf" class="form-control" formControlName="cpf" />
+    </div>
+
+    <div class="mb-3">
+      <label for="endereco" class="form-label">Endereço</label>
+      <input id="endereco" class="form-control" formControlName="endereco" />
+    </div>
+
+    <div class="mb-3">
+      <label for="telefone" class="form-label">Telefone</label>
+      <input id="telefone" class="form-control" formControlName="telefone" />
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" type="email" class="form-control" formControlName="email" />
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">Salvar</button>
+    </div>
+  </form>
+</div>
