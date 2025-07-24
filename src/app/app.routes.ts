@@ -5,6 +5,10 @@ import { CadastrarPessoaComponent } from './pages/cadastrar-pessoa/cadastrar-pes
 import { ConsultarPessoasComponent } from './pages/consultar-pessoas/consultar-pessoas.component';
 import { CadastrarProdutoComponent } from './pages/cadastrar-produto/cadastrar-produto.component';
 import { ConsultarProdutosComponent } from './pages/consultar-produtos/consultar-produtos.component';
+import { CadastrarUsuarioComponent } from './pages/cadastrar-usuario/cadastrar-usuario.component';
+import { ConsultarUsuariosComponent } from './pages/consultar-usuarios/consultar-usuarios.component';
+import { CadastrarVendaComponent } from './pages/cadastrar-venda/cadastrar-venda.component';
+import { ConsultarVendasComponent } from './pages/consultar-vendas/consultar-vendas.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -17,6 +21,14 @@ export const routes: Routes = [
     // rotas para produtos
     { path: 'cadastrar-produto', component: CadastrarProdutoComponent },
     { path: 'cadastrar-produto/:id', component: CadastrarProdutoComponent },
-    { path: 'consultar-produtos', component: ConsultarProdutosComponent }
+    { path: 'consultar-produtos', component: ConsultarProdutosComponent },
+    // rotas para usario
+    { path: 'cadastrar-usuario', component: CadastrarUsuarioComponent },
+    { path: 'cadastrar-usuario/:id', component: CadastrarUsuarioComponent }, 
+    { path: 'consultar-usuarios', component: ConsultarUsuariosComponent },
+    // rotas para venda
+    { path: 'cadastrar-venda', component: CadastrarVendaComponent },
+    { path: 'cadastrar-venda/:id', component: CadastrarVendaComponent }, 
+    { path: 'consultar-vendas', component: ConsultarVendasComponent },
 ];
 

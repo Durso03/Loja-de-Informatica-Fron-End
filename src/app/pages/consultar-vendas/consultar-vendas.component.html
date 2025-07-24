@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h2 class="mb-4 border-bottom border-3 border-danger">Vendas</h2>
+
+  <div class="d-flex justify-content-end mb-2">
+    <button type="button" class="btn btn-danger" [routerLink]="['/cadastrar-venda']">Cadastrar</button>
+  </div>
+
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Data</th>
+        <th>Cliente</th>
+        <th>Funcionário</th>
+        <th>Valor Total</th>
+        <th class="text-center col-acoes">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let venda of vendas">
+        <td>{{ venda.data | date:'dd/MM/yyyy' }}</td>
+        <td>{{ venda.idPessoaCliente.nome }}</td>
+        <td>{{ venda.idPessoaFuncionario.nome }}</td>
+        <td>R$ {{ venda.valor | number:'1.2-2' }}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-warning me-2" (click)="editar(venda.id)">Editar</button>
+          <button class="btn btn-sm btn-primary" (click)="excluir(venda.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

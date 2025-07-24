@@ -1,0 +1,84 @@
+<div class="container mt-4">
+    <h2 class="mb-4 border-bottom border-3 border-danger">Venda</h2>
+
+    <!-- Formulário para adicionar produto à venda -->
+    <form [formGroup]="formGroupItem" (ngSubmit)="adicionarProduto()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="produto" class="form-label">Produto</label>
+                <select class="form-select" formControlName="produto">
+                    <option [ngValue]="null" disabled selected>Selecione um produto</option>
+                    <option *ngFor="let produto of produtos" [ngValue]="produto">{{ produto.descricao }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input id="quantidade" type="text" class="form-control" formControlName="quantidade" mask="separator" />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success" [disabled]="formGroupItem.invalid">+</button>
+        </div>
+    </form>
+
+    <!-- Tabela de produtos adicionados à venda -->
+    <table class="table table-bordered table-hover align-middle mt-3" *ngIf="vendaProdutos.length > 0">
+        <thead class="table-dark">
+            <tr>
+                <th>Produto</th>
+                <th>Valor Unitário</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of vendaProdutos; let i = index">
+                <td>{{ item.produto?.descricao }}</td>
+                <td>{{ item.produto?.valor | currency: 'BRL':'symbol':'1.2-2' }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ (item.produto?.valor ?? 0) * item.quantidade | currency: 'BRL' }}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-danger" (click)="removerProduto(i)">-</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Formulário da venda -->
+    <form [formGroup]="formGroupVenda" (ngSubmit)="salvarVenda()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="idPessoaCliente" class="form-label">Cliente</label>
+                <select class="form-select" formControlName="idPessoaCliente">
+                    <option [ngValue]="null" disabled selected>Selecione um cliente</option>
+                    <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="idPessoaFuncionario" class="form-label">Funcionário</label>
+                <select class="form-select" formControlName="idPessoaFuncionario">
+                    <option [ngValue]="null" disabled selected>Selecione um funcionário</option>
+                    <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="valor" class="form-label">Valor Total</label>
+                <input id="valor" type="text" class="form-control fundoInput"
+                    [value]="calcularValorTotal() | currency: 'BRL'" readonly />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a routerLink="/vendas" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success"
+                [disabled]="formGroupVenda.invalid || vendaProdutos.length === 0">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>

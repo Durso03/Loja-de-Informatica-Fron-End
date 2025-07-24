@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <h2 class="mb-4 border-bottom border-3 border-danger">Cadastrar Usuario</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="login" class="form-label">Login</label>
+      <input id="login" class="form-control" formControlName="login" />
+    </div>
+
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <input id="senha" type="password" class="form-control" formControlName="senha" />
+    </div>
+
+    <div class="mb-3">
+      <label for="tipo" class="form-label">Tipo</label>
+      <select id="tipo" class="form-select" formControlName="tipo">
+        <option value="">Selecione um tipo</option>
+        <option value="VENDEDOR">VENDEDOR</option>
+        <option value="CLIENTE">CLIENTE</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="idPessoa" class="form-label">Pessoa</label>
+      <select id="idPessoa" class="form-select" formControlName="idPessoa">
+        <option value="">Selecione uma pessoa</option>
+        <option *ngFor="let cat of pessoas" [value]="cat.id">{{ cat.nome }}</option>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">Salvar</button>
+    </div>
+  </form>
+</div>
