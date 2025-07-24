@@ -5,5 +5,5 @@ export class Produto {
     descricao!: string;
     valor!: number;
     estoque!: number;
-    idCategoria!: Categoria;
+    idCategoria!: number;
 }

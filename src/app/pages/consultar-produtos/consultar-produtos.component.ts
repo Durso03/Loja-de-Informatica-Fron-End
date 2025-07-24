@@ -48,16 +48,15 @@ export class ConsultarProdutosComponent {
   }
 
   carregarCategorias(): void {
-    this.categoriaService.listar().subscribe(resposta => {
-      this.categorias = resposta;
+    this.categoriaService.listar().subscribe(categorias => {
+      this.categorias = categorias;
     });
   }
 
-  obterDescCategoria(categoria: Categoria): string {
-    const catEncontrada = this.categorias.find(cat => cat.id === categoria.id);
-    return catEncontrada ? catEncontrada.descricao : 'Categoria não encontrada';
+  obterDescCategoria(idCategoria: number): string {
+    const categoria = this.categorias.find(cat => cat.id === idCategoria);
+    return categoria ? categoria.descricao : 'Categoria não encontrada';
   }
-
 
   cadastrar(): void {
     this.router.navigate(['/cadastrar-produto']);

@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProdutoService } from '../../services/produto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Categoria } from '../../models/categoria';
+import { CategoriaService } from '../../services/categoria.service';
+
 
 @Component({
   selector: 'app-cadastrar-produto',
@@ -12,6 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cadastrar-produto.component.css'
 })
 export class CadastrarProdutoComponent {
+  categorias: Categoria[] = [];
 
   formulario: FormGroup;
   id?: number;
@@ -20,7 +24,8 @@ export class CadastrarProdutoComponent {
     private fb: FormBuilder,
     private produtoService: ProdutoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private categoriaService: CategoriaService
   ) {
     this.formulario = this.fb.group({
       id: [''],
@@ -31,21 +36,23 @@ export class CadastrarProdutoComponent {
     });
   }
 
-  ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.id = Number(idParam);
-      this.produtoService.buscarPorId(this.id).subscribe({
-        next: (produto) => {
-          this.formulario.patchValue(produto);
-        },
-        error: () => {
-          alert('Produto não encontrado.');
-          this.router.navigate(['/consultar-produtos']);
-        }
-      });
-    }
+ngOnInit(): void {
+  this.categoriaService.listar().subscribe({
+    next: (dados) => this.categorias = dados
+  });
+
+  const idParam = this.route.snapshot.paramMap.get('id');
+  if (idParam) {
+    this.id = Number(idParam);
+    this.produtoService.buscarPorId(this.id).subscribe({
+      next: (produto) => this.formulario.patchValue(produto),
+      error: () => {
+        alert('Produto não encontrado.');
+        this.router.navigate(['/consultar-produtos']);
+      }
+    });
   }
+}
 
   onSubmit(): void {
     if (this.formulario.valid) {

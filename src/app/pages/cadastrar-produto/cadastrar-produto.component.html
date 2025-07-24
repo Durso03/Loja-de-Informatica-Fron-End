@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2 class="mb-4 border-bottom border-3 border-danger">Cadastrar Pessoa</h2>
+  <h2 class="mb-4 border-bottom border-3 border-danger">Cadastrar Produto</h2>
 
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <div class="mb-3">
@@ -18,8 +18,11 @@
     </div>
 
     <div class="mb-3">
-      <label for="idCategoria" class="form-label">ID da Categoria</label>
-      <input id="idCategoria" class="form-control" formControlName="idCategoria" />
+      <label for="idCategoria" class="form-label">Categoria</label>
+      <select id="idCategoria" class="form-select" formControlName="idCategoria">
+        <option value="">Selecione uma categoria</option>
+        <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.descricao }}</option>
+      </select>
     </div>
 
     <div class="d-flex justify-content-end">
