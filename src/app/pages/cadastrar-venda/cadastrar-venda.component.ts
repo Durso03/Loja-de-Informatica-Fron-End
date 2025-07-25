@@ -7,11 +7,13 @@ import { Produto } from '../../models/produto';
 import { Pessoa } from '../../models/pessoa';
 import { Vendaproduto } from '../../models/vendaproduto';
 import { Venda } from '../../models/venda';
+import { Usuario } from '../../models/usuario'; // Importar o modelo de Usuário
 
 import { ProdutoService } from '../../services/produto.service';
 import { PessoaService } from '../../services/pessoa.service';
 import { VendaService } from '../../services/venda.service';
 import { VendaprodutoService } from '../../services/vendaproduto.service';
+import { UsuarioService } from '../../services/usuario.service'; // Importar o serviço de Usuário
 
 @Component({
   selector: 'app-cadastrar-venda',
@@ -24,7 +26,8 @@ export class CadastrarVendaComponent {
   formGroupVenda!: FormGroup;
   formGroupItem!: FormGroup;
 
-  usuarios: Pessoa[] = [];
+  clientes: Pessoa[] = []; // Lista apenas para clientes
+  funcionarios: Pessoa[] = []; // Lista apenas para funcionários
   produtos: Produto[] = [];
   vendaProdutos: Vendaproduto[] = [];
 
@@ -34,6 +37,7 @@ export class CadastrarVendaComponent {
     private produtoService: ProdutoService,
     private vendaService: VendaService,
     private vendaProdutoService: VendaprodutoService,
+    private usuarioService: UsuarioService, // Injetar o serviço de Usuário
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -50,14 +54,36 @@ export class CadastrarVendaComponent {
       quantidade: [1, [Validators.required, Validators.min(1)]]
     });
 
-    this.carregarUsuarios();
+    this.carregarClientesEFuncionarios();
     this.carregarProdutos();
   }
 
-  carregarUsuarios(): void {
+  carregarClientesEFuncionarios(): void {
+    // Primeiro carrega todas as pessoas
     this.pessoaService.listar().subscribe({
-      next: (res) => this.usuarios = res,
-      error: (e) => alert("Erro ao carregar usuários")
+      next: (pessoas) => {
+        // Depois carrega os usuários para filtrar por tipo
+        this.usuarioService.listar().subscribe({
+          next: (usuarios) => {
+            // Criar um mapa de idPessoa para tipo de usuário
+            const tipoPorPessoa: {[key: number]: string} = {};
+            usuarios.forEach(usuario => {
+              tipoPorPessoa[usuario.idPessoa] = usuario.tipo;
+            });
+
+            // Filtrar pessoas por tipo
+            this.clientes = pessoas.filter(pessoa => 
+              tipoPorPessoa[pessoa.id] === 'CLIENTE'
+            );
+            
+            this.funcionarios = pessoas.filter(pessoa => 
+              tipoPorPessoa[pessoa.id] === 'VENDEDOR'
+            );
+          },
+          error: (e) => alert("Erro ao carregar usuários")
+        });
+      },
+      error: (e) => alert("Erro ao carregar pessoas")
     });
   }
 

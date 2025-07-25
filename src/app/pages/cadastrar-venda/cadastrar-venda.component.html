@@ -54,7 +54,8 @@
                 <label for="idPessoaCliente" class="form-label">Cliente</label>
                 <select class="form-select" formControlName="idPessoaCliente">
                     <option [ngValue]="null" disabled selected>Selecione um cliente</option>
-                    <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+                    <!-- Usar lista de clientes filtrada -->
+                    <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nome }}</option>
                 </select>
             </div>
 
@@ -62,7 +63,8 @@
                 <label for="idPessoaFuncionario" class="form-label">Funcionário</label>
                 <select class="form-select" formControlName="idPessoaFuncionario">
                     <option [ngValue]="null" disabled selected>Selecione um funcionário</option>
-                    <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+                    <!-- Usar lista de funcionários filtrada -->
+                    <option *ngFor="let funcionario of funcionarios" [ngValue]="funcionario">{{ funcionario.nome }}</option>
                 </select>
             </div>
 
