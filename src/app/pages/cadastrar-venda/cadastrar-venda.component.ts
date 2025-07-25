@@ -76,25 +76,32 @@ export class CadastrarVendaComponent {
     this.vendaProdutos.splice(index, 1);
   }
 
-  salvarVenda(): void {
-    const novaVenda: Venda = this.formGroupVenda.value;
-    novaVenda.valor = this.calcularValorTotal();
-    
-    this.vendaService.salvar(novaVenda).subscribe({
-      next: (vendaSalva) => {
-        // Associa os produtos à venda salva
-        this.vendaProdutos.forEach(vp => {
-          vp.idVenda = vendaSalva.id;
-          this.vendaProdutoService.salvar(vp).subscribe();
-        });
+salvarVenda(): void {
+    const formValue = this.formGroupVenda.value;
 
-        alert("Venda salva com sucesso!");
-        this.formGroupVenda.reset();
-        this.vendaProdutos = [];
-      },
-      error: () => alert("Erro ao salvar venda")
+    const novaVenda: Venda = {
+        ...formValue,
+        idPessoaCliente: formValue.idPessoaCliente.id,
+        idPessoaFuncionario: formValue.idPessoaFuncionario.id,
+        valor: this.calcularValorTotal(),
+        data: new Date() // Adiciona a data atual no momento do cadastro
+    };
+
+    this.vendaService.salvar(novaVenda).subscribe({
+        next: (vendaSalva) => {
+            this.vendaProdutos.forEach(vp => {
+                vp.idVenda = vendaSalva.id;
+                this.vendaProdutoService.salvar(vp).subscribe();
+            });
+            alert("Venda salva com sucesso!");
+            this.formGroupVenda.reset();
+            this.vendaProdutos = [];
+        },
+        error: () => alert("Erro ao salvar venda")
     });
-  }
+}
+
+
 
   calcularValorTotal(): number {
     return this.vendaProdutos.reduce((total, vp) => {
