@@ -33,7 +33,9 @@ export class CadastrarVendaComponent {
     private pessoaService: PessoaService,
     private produtoService: ProdutoService,
     private vendaService: VendaService,
-    private vendaProdutoService: VendaprodutoService
+    private vendaProdutoService: VendaprodutoService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +86,7 @@ salvarVenda(): void {
         idPessoaCliente: formValue.idPessoaCliente.id,
         idPessoaFuncionario: formValue.idPessoaFuncionario.id,
         valor: this.calcularValorTotal(),
-        data: new Date() // Adiciona a data atual no momento do cadastro
+        data: new Date()
     };
 
     this.vendaService.salvar(novaVenda).subscribe({
@@ -96,6 +98,7 @@ salvarVenda(): void {
             alert("Venda salva com sucesso!");
             this.formGroupVenda.reset();
             this.vendaProdutos = [];
+            this.router.navigate(['/consultar-vendas']);
         },
         error: () => alert("Erro ao salvar venda")
     });

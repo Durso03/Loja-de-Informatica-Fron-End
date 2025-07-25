@@ -5,6 +5,6 @@ export class Venda {
   data!: Date;                   
   valor!: number;          
   observacao?: string;         
-  idPessoaCliente!: Pessoa;      
-  idPessoaFuncionario!: Pessoa;  
+  idPessoaCliente!: number;      
+  idPessoaFuncionario!: number;  
 }

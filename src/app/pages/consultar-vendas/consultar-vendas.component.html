@@ -18,11 +18,11 @@
     <tbody>
       <tr *ngFor="let venda of vendas">
         <td>{{ venda.data | date:'dd/MM/yyyy' }}</td>
-        <td>{{ venda.idPessoaCliente.nome }}</td>
-        <td>{{ venda.idPessoaFuncionario.nome }}</td>
+        <td>{{ obterNomePessoa(venda.idPessoaCliente) }}</td>
+        <td>{{ obterNomePessoa(venda.idPessoaFuncionario) }}</td>
         <td>R$ {{ venda.valor | number:'1.2-2' }}</td>
         <td class="text-center">
-          <button class="btn btn-sm btn-warning me-2" (click)="editar(venda.id)">Editar</button>
+          <!-- <button class="btn btn-sm btn-warning me-2" (click)="editar(venda.id)">Editar</button> -->
           <button class="btn btn-sm btn-primary" (click)="excluir(venda.id)">Excluir</button>
         </td>
       </tr>
