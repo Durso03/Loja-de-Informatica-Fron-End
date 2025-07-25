@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Categoria } from '../models/categoria';
 import { Observable } from 'rxjs';
+import { appSettings } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService {
 
-  private apiUrl= 'http://localhost:8080/categorias';
+  private apiUrl = `${appSettings.apiBaseUrl}/categorias`;
 
   constructor(private http: HttpClient) {}
 
